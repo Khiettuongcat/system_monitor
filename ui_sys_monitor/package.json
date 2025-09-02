@@ -2,12 +2,21 @@
   "name": "ui_sys_monitor",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon --exec electron ."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs"
+  "type": "commonjs",
+  "dependencies": {
+    "chart.js": "^4.5.0",
+    "electron": "^37.4.0",
+    "electron-prompt": "^1.7.0",
+    "nodemon": "^3.1.10"
+  },
+  "devDependencies": {
+    "electron-reload": "^2.0.0-alpha.1"
+  }
 }

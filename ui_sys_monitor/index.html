@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>system server </title>
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+  <!-- link flowbite -->
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+</head>
+
+<body>
+  <!-- Sidebar -->
+  <aside id="default-sidebar"
+    class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+    aria-label="Sidebar">
+    <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+      <ul class="space-y-2 font-medium">
+        <li>
+          <a href="#"
+            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white bg-blue-500 dark:hover:bg-gray-700 group">
+            <svg class="w-5 h-5 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+              viewBox="0 0 22 21">
+              <path
+                d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
+              <path
+                d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
+            </svg>
+            <span class="ms-3 text-white">Thông tin thiết bị</span>
+          </a>
+        </li>
+        <li>
+          <a href="./layout/disk.html"
+            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <svg class="shrink-0 w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+              viewBox="0 0 18 18">
+              <path
+                d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" />
+            </svg>
+            <span class="flex-1 ms-3 whitespace-nowrap">Kanban</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Content -->
+  <div class="p-4 sm:ml-64">
+    <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+
+      <!-- Nhập API -->
+      <div class="mb-4">
+        <label for="api_input" class="block mb-2 text-sm font-medium text-gray-700">Nhập API URL:</label>
+        <div class="flex gap-2">
+          <input id="api_input" type="text" placeholder="https://example.com/api"
+            class="flex-1 p-2 border rounded-lg text-sm" />
+          <button onclick="loadSystemInfo()" class="px-4 py-2 bg-blue-600 text-white rounded-lg">Load</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-3 gap-4 mb-2">
+        <!-- OS Info -->
+        <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+          <h5 class="text-gray-500 font-medium">Name OS</h5>
+          <h1 id="os_name" class="font-medium text-lg mb-4">Loading...</h1>
+          <h6 class="text-gray-500 font-medium text-base">API</h6>
+          <h1 id="api_out" class="font-medium text-sm">loading...</h1>
+        </div>
+
+        <!-- Version + Uptime -->
+        <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+          <h5 class="text-gray-500 font-medium">Version OS</h5>
+          <h1 id="os_version" class="font-medium text-lg mb-4">Loading...</h1>
+          <h6 class="text-gray-500 font-medium text-base">Uptime</h6>
+          <h1 id="uptime" class="font-medium text-base">loading...</h1>
+        </div>
+
+        <!-- Connection -->
+        <div>
+          <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+            <h2 class="text-gray-500 font-medium text-ms">Methods API</h2>
+            <span id="api_status" class="mb-2 text-base font-medium text-red-500">Disconnect</span>
+          </div>
+          <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+            <h1 class="text-gray-500 font-medium text-ms">Remote access :
+              <span id="remote" class="text-gray-900">off</span>
+            </h1>
+          </div>
+        </div>
+      </div>
+
+      <!-- System Monitor -->
+      <div class="grid grid-cols-4 gap-4 mt-4">
+        <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+          <h5 class="text-gray-500 font-medium">CPU Usage</h5>
+          <h2 id="cpu" class="text-xl font-bold">-- %</h2>
+        </div>
+        <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+          <h5 class="text-gray-500 font-medium">Memory Usage</h5>
+          <h2 id="memory" class="text-xl font-bold">-- %</h2>
+        </div>
+        <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+          <h5 class="text-gray-500 font-medium">Disk Usage</h5>
+          <h2 id="disk" class="text-xl font-bold">-- %</h2>
+        </div>
+        <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+          <h5 class="text-gray-500 font-medium">Network</h5>
+          <h2 id="network" class="text-xl font-bold">-- KB/s</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script render data -->
+  <script src="./src/js/index.js"></script>
+</body>
+
+</html>
